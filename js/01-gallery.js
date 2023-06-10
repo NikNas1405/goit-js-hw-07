@@ -20,7 +20,27 @@ const galleryItemsArray = galleryItems
 
 galleryWrapper.insertAdjacentHTML("beforeend", galleryItemsArray);
 
-//======================1 var
+//===================1 var
+
+const instance = basicLightbox.create(
+  `<img src="" width="1280" height="auto">`,
+  {
+    onShow: (instance) => {
+      document.addEventListener("keydown", onEscKeyPress);
+    },
+
+    onClose: (instance) => {
+      document.removeEventListener("keydown", onEscKeyPress);
+    },
+  }
+);
+
+function onEscKeyPress(event) {
+  if (event.code !== "Escape") {
+    return;
+  }
+  instance.close();
+}
 
 const handleOpenImageFromGalleryEvent = (event) => {
   event.preventDefault();
@@ -29,54 +49,41 @@ const handleOpenImageFromGalleryEvent = (event) => {
     return;
   }
 
-  const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="1280" height="auto">
-`);
+  instance.element().querySelector("img").src = event.target.dataset.source;
 
   instance.show();
-
-  document.addEventListener("keydown", (event) => {
-    if (event.code !== "Escape") {
-      return;
-    }
-    instance.close();
-  });
-
-  document.removeEventListener("keydown", (event) => {
-    if (event.code !== "Escape") {
-      return;
-    }
-    instance.close();
-  });
 };
 
 galleryWrapper.addEventListener("click", handleOpenImageFromGalleryEvent);
 
-//===================2 var
+//====================== 2 var невірний (забраковано ментором). оскільки не можна передавати анонімну функцію для слухача події ( в даному випадку, бо не можна його прибрати!)
 
-// const instance = basicLightbox.create(
-//   `
-// <img width="1280" height="auto" src="">`,
-//   {
-//     onShow: (instance) => {
-//       document.addEventListener("keydown", onEscKeyPress);
-//     },
-//     onClose: (instance) => {
-//       document.removeEventListener("keydown", onEscKeyPress);
-//     },
-//   }
-// );
-
-// function handleOpenImageFromGalleryEvent(event) {
+// const handleOpenImageFromGalleryEvent = (event) => {
 //   event.preventDefault();
-//   const datasetSource = event.target.dataset.source;
-//   if (!datasetSource) return;
-//   instance.element().querySelector("img").src = datasetSource;
-//   instance.show();
-// }
 
-// function onEscKeyPress(event) {
-//   if (event.code !== "Escape") return;
-//   instance.close();
-// }
+//   if (event.target.nodeName !== "IMG") {
+//     return;
+//   }
+
+//   const instance = basicLightbox.create(`
+//     <img src="${event.target.dataset.source}" width="1280" height="auto">
+// `);
+
+//   instance.show();
+
+//   document.addEventListener("keydown", (event) => {
+//     if (event.code !== "Escape") {
+//       return;
+//     }
+//     instance.close();
+//   });
+
+//   document.removeEventListener("keydown", (event) => {
+//     if (event.code !== "Escape") {
+//       return;
+//     }
+//     instance.close();
+//   });
+// };
+
 // galleryWrapper.addEventListener("click", handleOpenImageFromGalleryEvent);
