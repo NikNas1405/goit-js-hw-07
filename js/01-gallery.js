@@ -20,8 +20,6 @@ const galleryItemsArray = galleryItems
 
 galleryWrapper.insertAdjacentHTML("beforeend", galleryItemsArray);
 
-//===================1 var
-
 const instance = basicLightbox.create(
   `<img src="" width="1280" height="auto">`,
   {
@@ -55,35 +53,3 @@ const handleOpenImageFromGalleryEvent = (event) => {
 };
 
 galleryWrapper.addEventListener("click", handleOpenImageFromGalleryEvent);
-
-//====================== 2 var невірний (забраковано ментором). оскільки не можна передавати анонімну функцію для слухача події ( в даному випадку, бо не можна його прибрати!)
-
-// const handleOpenImageFromGalleryEvent = (event) => {
-//   event.preventDefault();
-
-//   if (event.target.nodeName !== "IMG") {
-//     return;
-//   }
-
-//   const instance = basicLightbox.create(`
-//     <img src="${event.target.dataset.source}" width="1280" height="auto">
-// `);
-
-//   instance.show();
-
-//   document.addEventListener("keydown", (event) => {
-//     if (event.code !== "Escape") {
-//       return;
-//     }
-//     instance.close();
-//   });
-
-//   document.removeEventListener("keydown", (event) => {
-//     if (event.code !== "Escape") {
-//       return;
-//     }
-//     instance.close();
-//   });
-// };
-
-// galleryWrapper.addEventListener("click", handleOpenImageFromGalleryEvent);
